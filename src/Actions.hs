@@ -175,9 +175,7 @@ syncFetch c = do
     notes' es = maybe "" notes (listToMaybe es)
 
 save :: State -> IO State
-save s@State {_config = c, _editor = ed}
-  -- s ^. focused
- =
+save s@State {_config = c, _editor = ed} =
   case s ^. focused of
     Just e -> do
       e' <- updateNote c e notes'
