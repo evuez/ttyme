@@ -20,6 +20,7 @@ import Brick.Widgets.Core
   , withAttr
   , withBorderStyle
   )
+import Data.Bool (bool)
 import qualified Data.Time.Format as F (defaultTimeLocale, formatTime)
 import Data.Time.LocalTime (ZonedTime(..))
 import qualified Graphics.Vty as V (black, magenta)
@@ -59,7 +60,4 @@ formatTime :: ZonedTime -> String
 formatTime = F.formatTime F.defaultTimeLocale "%F %R"
 
 lor :: (Foldable f) => f a -> f a -> f a
-lor a b =
-  if null a
-    then b
-    else a
+lor a b = bool a b (null a)

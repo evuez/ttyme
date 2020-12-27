@@ -143,7 +143,7 @@ syncRefresh :: State -> IO State
 syncRefresh s = do
   d <- getCurrentTime
   es <- fetchEntries (_config s) (s ^. day)
-  pure $
+  pure . (panel .~ Sheet) . open $
     s
     { _running = _id <$> find running es
     , _now = d

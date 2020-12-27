@@ -29,6 +29,7 @@ import Data.Aeson
   , object
   , withObject
   )
+import Data.Bool (bool)
 import Data.List.NonEmpty (NonEmpty)
 import Data.Text (Text, pack)
 import Data.Time.Calendar (Day)
@@ -236,11 +237,7 @@ updateRunning c e v =
     r <- req PATCH url NoReqBody jsonResponse (mconcat $ headers c)
     pure (responseBody r :: Entry)
   where
-    url = root /: "time_entries" /: showId e /: action
-    action =
-      if v
-        then "restart"
-        else "stop"
+    url = root /: "time_entries" /: showId e /: bool "stop" "restart" v
 
 update :: Config -> Entry -> Update -> IO Entry
 update c e u =
